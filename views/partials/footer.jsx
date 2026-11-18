@@ -38,10 +38,10 @@ export default function footer() {
         <div className="flex flex-col w-full md:w-58 md:my-0 md:m-auto md:mt-0 border-y border-gray-300 md:border-none p-12 md:p-0"> 
           <h2 className="text-gray-600 font-bold mb-4">Contact Information</h2>
           <ul className="flex flex-col gap-4 text-gray-600">
-            <li className="flex items-center">
+             {/* <li className="flex items-center">
               <i className="fa-solid fa-phone text-blue-400 w-6"></i>
-              <a href="https://wa.me/6287856490745" className="ml-2 hover:text-blue-500">+62 878-5649-0745</a>
-            </li>
+            <a href="https://wa.me/6287856490745" className="ml-2 hover:text-blue-500">+62 878-5649-0745</a>
+            </li>*/}
             <li className="flex items-center">
               <i className="fa-solid fa-envelope text-blue-400 w-6"></i>
               <a href="mailto:liaelwanda@gmail.com" className="ml-2 hover:text-blue-500 break-all">liaelwanda@gmail.com</a>
