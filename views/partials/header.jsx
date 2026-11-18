@@ -5,8 +5,12 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Menutup dropdown hanya jika mengklik di luar area menu
+  // Menghapus sisa /#home atau /#about dari URL saat halaman pertama kali dibuka
   useEffect(() => {
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
@@ -16,6 +20,21 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Fungsi scroll mulus tanpa menyentuh URL sama sekali
+  const scrollToSection = (id) => {
+    setIsOpen(false);
+
+    // Pastikan URL tetap bersih tanpa hash
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 flex justify-between p-6 px-12 border-b border-gray-200 text-gray-800 bg-white font-sans">
       <h1 className="hidden sm:block font-bold text-xl">Amalia</h1>
@@ -23,12 +42,15 @@ export default function Header() {
       <nav className="ml-auto sm:ml-0">
         <ul className="flex text-right list-none gap-10 items-center">
           <li>
-            <a href="#home" className="hover:text-blue-500 transition">
+            <button
+              type="button"
+              onClick={() => scrollToSection('home')}
+              className="hover:text-blue-500 transition cursor-pointer focus:outline-none"
+            >
               Home
-            </a>
+            </button>
           </li>
 
-          {/* Bagian About dengan sistem Klik murni */}
           <li ref={dropdownRef} className="relative">
             <button
               type="button"
@@ -38,35 +60,38 @@ export default function Header() {
               About
             </button>
 
-            {/* Menu Dropdown hanya muncul jika state isOpen bernilai true */}
             {isOpen && (
               <ul className="absolute right-0 bg-white text-gray-800 shadow-xl rounded-lg border border-gray-200 p-2 mt-2 w-36 z-50">
                 <li>
-                  <a
-                    href="#about"
-                    onClick={() => setIsOpen(false)}
-                    className="block p-2 rounded hover:bg-gray-50 hover:text-blue-500 transition"
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('about')}
+                    className="w-full text-right block p-2 rounded hover:bg-gray-50 hover:text-blue-500 transition cursor-pointer"
                   >
                     About Me
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a
-                    href="#sertifikat"
-                    onClick={() => setIsOpen(false)}
-                    className="block p-2 rounded hover:bg-gray-50 hover:text-blue-500 transition"
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('sertifikat')}
+                    className="w-full text-right block p-2 rounded hover:bg-gray-50 hover:text-blue-500 transition cursor-pointer"
                   >
                     Sertifikat
-                  </a>
+                  </button>
                 </li>
               </ul>
             )}
           </li>
 
           <li>
-            <a href="#kontak" className="hover:text-blue-500 transition">
+            <button
+              type="button"
+              onClick={() => scrollToSection('kontak')}
+              className="hover:text-blue-500 transition cursor-pointer focus:outline-none"
+            >
               Contact
-            </a>
+            </button>
           </li>
         </ul>
       </nav>
